@@ -70,19 +70,55 @@ function Tamago(element) {
   });
 
   // Bind bottom user key buttons (simulate keydown+keyup)
+  // [].forEach.call(
+  //   document.querySelectorAll(".user-keys button"),
+  //   function (btn) {
+  //     var code = Number(btn.dataset.key);
+  //     btn.addEventListener("mousedown", function () {
+  //       that.system.keys &= ~(that.mapping[code] || 0);
+  //     });
+  //     btn.addEventListener("mouseup", function () {
+  //       that.system.keys |= that.mapping[code] || 0;
+  //     });
+  //     btn.addEventListener("mouseleave", function () {
+  //       that.system.keys |= that.mapping[code] || 0;
+  //     });
+  //   }
+  // );
+
   [].forEach.call(
     document.querySelectorAll(".user-keys button"),
     function (btn) {
       var code = Number(btn.dataset.key);
-      btn.addEventListener("mousedown", function () {
+
+      // --- 1. 定义“按下”的逻辑 ---
+      var handleKeyDown = function (event) {
+        // 阻止触摸事件的默认行为（如滚动或模拟点击）
+        if (event.type.startsWith("touch")) {
+          event.preventDefault();
+        }
         that.system.keys &= ~(that.mapping[code] || 0);
-      });
-      btn.addEventListener("mouseup", function () {
+      };
+
+      // --- 2. 定义“松开”的逻辑 ---
+      var handleKeyUp = function (event) {
+        if (event.type.startsWith("touch")) {
+          event.preventDefault();
+        }
         that.system.keys |= that.mapping[code] || 0;
-      });
-      btn.addEventListener("mouseleave", function () {
-        that.system.keys |= that.mapping[code] || 0;
-      });
+      };
+
+      // --- 3. 绑定所有事件 ---
+
+      // 绑定 PC 鼠标事件
+      btn.addEventListener("mousedown", handleKeyDown);
+      btn.addEventListener("mouseup", handleKeyUp);
+      btn.addEventListener("mouseleave", handleKeyUp); // 鼠标移开也算松开
+
+      // 绑定移动端触摸事件
+      btn.addEventListener("touchstart", handleKeyDown);
+      btn.addEventListener("touchend", handleKeyUp);
+      btn.addEventListener("touchcancel", handleKeyUp); // 触摸被系统打断（比如来电话）也算松开
     }
   );
 }
