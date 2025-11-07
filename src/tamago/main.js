@@ -335,6 +335,57 @@ Tamago.prototype.configure = function (element) {
 
   element.innerHTML = mainTemplate(data);
 
+  element.style.display = "block";
+  element.style.width = "100vw";
+  element.style.height = "100vh";
+
+  var displayNode = element.querySelector("display");
+  if (displayNode) {
+    displayNode.style.display = "flex";
+    displayNode.style.flexDirection = "column";
+    displayNode.style.justifyContent = "center";
+    displayNode.style.alignItems = "center";
+    displayNode.style.width = "100vw";
+    displayNode.style.height = "100vh";
+    displayNode.style.position = "relative";
+  }
+
+  var figureSelect = element.querySelector("select[action=figure]");
+  if (figureSelect) {
+    figureSelect.addEventListener("change", function (e) {
+      that.system.inserted_figure = Number(e.target.value);
+    });
+    figureSelect.style.margin = "10px auto";
+    figureSelect.style.padding = "6px 12px";
+    figureSelect.style.borderRadius = "12px";
+  }
+
+  var canvasNode = element.querySelector("display canvas");
+  if (canvasNode) {
+    canvasNode.style.width = "40%";
+    canvasNode.style.height = "30%";
+  }
+
+  var userKeys = element.querySelector(".user-keys");
+  if (userKeys) {
+    userKeys.style.position = "absolute";
+    userKeys.style.left = "50%";
+    userKeys.style.bottom = "10%";
+    userKeys.style.transform = "translateX(-50%)";
+    userKeys.style.display = "flex";
+    userKeys.style.gap = "12px";
+
+    [].forEach.call(userKeys.querySelectorAll("button"), function (btn) {
+      btn.style.fontFamily = "monospace";
+      btn.style.fontSize = "16px";
+      btn.style.padding = "8px 14px";
+      btn.style.borderRadius = "20px";
+      btn.style.border = "1px solid #d4af37";
+      btn.style.background = "#fff";
+      btn.style.cursor = "pointer";
+    });
+  }
+
   function noopHandler(evt) {
     evt.stopPropagation();
     evt.preventDefault();
@@ -413,12 +464,6 @@ Tamago.prototype.configure = function (element) {
       display: element.querySelector("display canvas").getContext("2d"),
       figure: element.querySelector("display figure"),
     };
-
-    document
-      .querySelector("select[action=figure]")
-      .addEventListener("change", function (e) {
-        that.system.inserted_figure = Number(e.target.value);
-      });
 
     this._debug_port = 0x3000;
     this.update_control();

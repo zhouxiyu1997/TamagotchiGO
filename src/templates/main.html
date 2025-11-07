@@ -1,7 +1,16 @@
+
 <column>
-	<display >
+	<display>
 		<figure></figure>
-		<div>
+		<div class="figure-selector">
+			<select action="figure">
+				<option value="0">无芯片</option>
+				<option value="1">芯片1</option>
+				<option value="2">芯片2</option>
+				<option value="3">芯片3</option>
+			</select>
+		</div>
+		<div style="font-size: 24px;">
 			<i class="icon icon-dashboard glyph"></i>
 			<i class="icon icon-food glyph"></i>
 			<i class="icon icon-magic glyph"></i>
@@ -9,7 +18,7 @@
 			<i class="icon icon-user glyph"></i>
 		</div>
 		<canvas width="48" height="31"></canvas>
-		<div>
+		<div style="font-size: 24px;">
 			<i class="icon icon-comments glyph"></i>
 			<i class="icon icon-medkit glyph"></i>
 			<i class="icon icon-heart glyph"></i>
@@ -34,13 +43,6 @@
 			<input type="button" value="nmi" action="nmi"></input>
 		</buttons>
 		<buttons>
-			<select action="figure">
-				<option value="0">No Figure</option>
-				<option value="1">Fig1</option>
-				<option value="2">Fig2</option>
-				<option value="3">Fig3</option>
-			</select>
-
 			<select action="irq">
 				<option value="0">0: TIM0</option>
 				<option value="3">3: 2048</option>
