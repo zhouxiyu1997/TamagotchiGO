@@ -406,7 +406,7 @@ Tamago.prototype.configure = function (element) {
   if (userKeys) {
     userKeys.style.position = "absolute";
     userKeys.style.left = "50%";
-    userKeys.style.bottom = "10%";
+    userKeys.style.bottom = "23%";
     userKeys.style.transform = "translateX(-50%)";
     userKeys.style.display = "flex";
     userKeys.style.gap = "12px";
